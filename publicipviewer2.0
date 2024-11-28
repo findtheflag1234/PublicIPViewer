@@ -1,0 +1,46 @@
+import requests
+import sys
+
+def get_public_ip():
+    """
+    Récupère l'adresse IP publique de l'utilisateur à partir de l'API ipify.
+    """
+    try:
+        response = requests.get('https://api.ipify.org?format=json')
+        response.raise_for_status()  # Vérifie si la requête a réussi (code HTTP 200)
+        
+        ip = response.json()['ip']
+        print(f"\nVotre adresse IP publique est : {ip}")
+        return ip
+    except requests.exceptions.RequestException as e:
+        print(f"Erreur lors de la récupération de l'adresse IP : {e}")
+        sys.exit(1)  # Quitte le programme en cas d'erreur
+    
+def get_ip_details(ip):
+    """
+    Récupère les détails de l'adresse IP, tels que la localisation géographique,
+    via l'API ipinfo.io.
+    """
+    try:
+        response = requests.get(f'https://ipinfo.io/{ip}/json')
+        response.raise_for_status()
+        
+        data = response.json()
+        print(f"\nDétails de l'adresse IP {ip}:")
+        print(f"Localisation : {data.get('city', 'Non disponible')}, {data.get('region', 'Non disponible')}, {data.get('country', 'Non disponible')}")
+        print(f"Organisation : {data.get('org', 'Non disponible')}")
+        print(f"Hostname : {data.get('hostname', 'Non disponible')}")
+        print(f"Code postal : {data.get('postal', 'Non disponible')}")
+        
+    except requests.exceptions.RequestException as e:
+        print(f"Erreur lors de la récupération des détails IP : {e}")
+        sys.exit(1)
+
+if _name_ == "_main_":
+    print("Bienvenue dans l'application de récupération d'IP publique et de ses détails.")
+    
+    # Récupérer l'adresse IP publique
+    ip = get_public_ip()
+    
+    # Optionnel : Récupérer les détails géographiques et autres informations de l'IP
+    get_ip_details(ip)
