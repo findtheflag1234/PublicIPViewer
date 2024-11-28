@@ -1,0 +1,68 @@
+import requests
+import sys
+
+# Fonction pour récupérer l'adresse IP publique de l'utilisateur
+def get_public_ip():
+    """
+    Récupère l'adresse IP publique de l'utilisateur à partir de l'API ipify.
+    """
+    try:
+        response = requests.get('https://api.ipify.org?format=json')
+        response.raise_for_status()  # Vérifie si la requête a réussi (code HTTP 200)
+        ip = response.json()['ip']
+        return ip
+    except requests.exceptions.RequestException as e:
+        print(f"Erreur lors de la récupération de l'adresse IP publique : {e}")
+        sys.exit(1)  # Quitte le programme en cas d'erreur
+
+# Fonction pour récupérer les détails de l'adresse IP (géolocalisation, organisation, etc.)
+def get_ip_details(ip):
+    """
+    Récupère les détails de l'adresse IP, tels que la localisation géographique,
+    via l'API ipinfo.io.
+    """
+    try:
+        response = requests.get(f'https://ipinfo.io/{ip}/json')
+        response.raise_for_status()
+        data = response.json()
+        
+        print(f"\nDétails de l'adresse IP {ip}:")
+        print(f"Localisation : {data.get('city', 'Non disponible')}, {data.get('region', 'Non disponible')}, {data.get('country', 'Non disponible')}")
+        print(f"Organisation : {data.get('org', 'Non disponible')}")
+        print(f"Hostname : {data.get('hostname', 'Non disponible')}")
+        print(f"Code postal : {data.get('postal', 'Non disponible')}")
+        print(f"IP géolocalisée sur : {data.get('loc', 'Non disponible')}")
+    except requests.exceptions.RequestException as e:
+        print(f"Erreur lors de la récupération des détails de l'IP : {e}")
+        sys.exit(1)
+
+# Fonction pour afficher un menu et gérer les choix de l'utilisateur
+def display_menu():
+    """
+    Affiche un menu interactif et permet à l'utilisateur de choisir l'action à effectuer.
+    """
+    while True:
+        print("\n=== Menu ===")
+        print("1. Obtenir mon adresse IP publique")
+        print("2. Obtenir des détails sur une adresse IP (géolocalisation, organisation, etc.)")
+        print("3. Quitter")
+        
+        try:
+            choice = int(input("Choisissez une option (1-3) : "))
+            if choice == 1:
+                ip = get_public_ip()
+                print(f"\nVotre adresse IP publique est : {ip}")
+            elif choice == 2:
+                ip = input("\nEntrez l'adresse IP dont vous voulez obtenir les détails : ")
+                get_ip_details(ip)
+            elif choice == 3:
+                print("Au revoir !")
+                sys.exit(0)
+            else:
+                print("Choix invalide. Veuillez sélectionner une option valide.")
+        except ValueError:
+            print("Veuillez entrer un numéro valide.")
+        
+if _name_ == "_main_":
+    print("Bienvenue dans l'application de récupération d'IP publique et de ses détails.")
+    display_menu()
