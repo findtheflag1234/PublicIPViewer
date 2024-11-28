@@ -1,10 +1,10 @@
 # PublicIPViewer
-Description
+# Description
 Public IP Viewer and Details est une application Python qui permet à l'utilisateur de récupérer son adresse IP publique, ainsi que des informations détaillées sur cette adresse IP, telles que sa géolocalisation, son organisation, et d'autres détails pertinents. L'application utilise les APIs ipify pour obtenir l'IP publique et ipinfo.io pour fournir des informations détaillées sur l'adresse IP.
 
 Cette application peut être utilisée pour des démonstrations en cybersécurité, des exercices de certification CEH (Certified Ethical Hacker), ou pour simplement explorer et comprendre les informations relatives aux adresses IP publiques.
 
-Fonctionnalités
+# Fonctionnalités
 Obtenir l'adresse IP publique de l'utilisateur : L'application utilise l'API ipify pour récupérer l'adresse IP publique de l'utilisateur.
 Détails sur l'adresse IP : Pour toute adresse IP, l'application récupère des informations comme la localisation (ville, pays, région), l'organisation, le nom d'hôte et le code postal à l'aide de l'API ipinfo.io.
 Interface utilisateur interactive : Un menu interactif permet à l'utilisateur de choisir facilement entre obtenir son IP publique, récupérer des détails sur une IP spécifique, ou quitter l'application.
@@ -19,7 +19,7 @@ Clonez ce repository :
 
 bash
 Copier le code
-git clone https://github.com/votre-utilisateur/public-ip-viewer.git
+git clone https://github.com/findtheflag1234/PublicIPViewer.git
 Accédez au dossier du projet :
 
 bash
